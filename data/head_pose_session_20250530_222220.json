@@ -1,0 +1,12 @@
+{
+  "start_time": "2025-05-30 22:21:10.734188",
+  "head_turns": 21,
+  "left_turns": 21,
+  "right_turns": 0,
+  "total_time_head_turned": 61.52553701400757,
+  "warnings_shown": 9,
+  "end_time": "2025-05-30 22:22:20.512290",
+  "duration_seconds": 69.778102,
+  "turns_per_minute": 18.05724093785182,
+  "percentage_time_turned": 88.17313061052816
+}

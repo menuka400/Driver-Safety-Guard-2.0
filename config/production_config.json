@@ -1,0 +1,52 @@
+{
+    "detection": {
+        "phone_model_path": "models/yolo11x.pt",
+        "face_model_path": "models/yolov11l-face.pt",
+        "person_model_path": "models/yolo11x.pt",
+        "confidence_threshold": 0.7,
+        "nms_threshold": 0.4,
+        "phone_confidence": 0.8,
+        "face_confidence": 0.6,
+        "person_confidence": 0.7
+    },
+    "tracking": {
+        "max_disappeared": 50,
+        "max_distance": 150,
+        "feature_extraction_enabled": true
+    },
+    "camera": {
+        "width": 1280,
+        "height": 720,
+        "fps": 60,
+        "buffer_size": 2
+    },
+    "gpu": {
+        "enabled": true,
+        "device": "cuda:0",
+        "memory_fraction": 0.9,
+        "benchmark": true
+    },
+    "esp32": {
+        "ip_address": "192.168.1.150",
+        "port": 80,
+        "timeout": 3,
+        "retry_attempts": 5
+    },
+    "tts": {
+        "enabled": true,
+        "rate": 180,
+        "volume": 1.0,
+        "voice_index": 1
+    },
+    "logging": {
+        "level": "DEBUG",
+        "file_path": "logs/tracker_production.log"
+    },
+    "display": {
+        "show_video": true,
+        "show_fps": true,
+        "show_detection_boxes": true,
+        "show_tracking_ids": true,
+        "window_name": "Production Tracker"
+    }
+}

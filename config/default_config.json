@@ -1,0 +1,56 @@
+{
+    "detection": {
+        "phone_model_path": "models/yolo11x.pt",
+        "face_model_path": "models/yolov11l-face.pt",
+        "person_model_path": "models/yolo11x.pt",
+        "confidence_threshold": 0.5,
+        "nms_threshold": 0.5,
+        "phone_confidence": 0.6,
+        "face_confidence": 0.4,
+        "person_confidence": 0.5
+    },    "tracking": {
+        "hrnet_model_path": "models/hrnetv2_w32_imagenet_pretrained.pth",
+        "max_disappeared": 30,
+        "max_distance": 100,
+        "feature_extraction_enabled": true,
+        "feature_dim": 256
+    },
+    "camera": {
+        "width": 640,
+        "height": 480,
+        "fps": 30,
+        "buffer_size": 1
+    },
+    "gpu": {
+        "enabled": true,
+        "device": "auto",
+        "memory_fraction": 0.8,
+        "benchmark": true
+    },    "esp32": {
+        "ip_address": "192.168.1.100",
+        "port": 80,
+        "timeout": 5,
+        "retry_attempts": 3,
+        "alert_cooldown": 2.0
+    },
+    "tts": {
+        "enabled": true,
+        "rate": 150,
+        "volume": 0.8,
+        "voice_index": 0
+    },
+    "logging": {
+        "level": "INFO",
+        "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        "file_path": "logs/tracker.log",
+        "max_bytes": 10485760,
+        "backup_count": 5
+    },
+    "display": {
+        "show_video": true,
+        "show_fps": true,
+        "show_detection_boxes": true,
+        "show_tracking_ids": true,
+        "window_name": "Object Tracker"
+    }
+}
