@@ -9,6 +9,7 @@ import time
 class TTSManager:
     def __init__(self):
         """Initialize Text-to-Speech manager"""
+        print("Initializing TTS Manager...")
         self.tts_engine = self.init_tts()
         self.tts_lock = threading.Lock()
         
@@ -23,13 +24,17 @@ class TTSManager:
     def init_tts(self):
         """Initialize Text-to-Speech engine"""
         try:
+            print("Starting TTS engine initialization...")
             engine = pyttsx3.init()
             engine.setProperty('rate', 140)
             engine.setProperty('volume', 1.0)
             voices = engine.getProperty('voices')
             if len(voices) > 1:
                 engine.setProperty('voice', voices[1].id)
-            print("✅ TTS engine initialized")
+            # Test TTS engine
+            engine.say("TTS system initialized")
+            engine.runAndWait()
+            print("✅ TTS engine initialized and tested successfully")
             return engine
         except Exception as e:
             print(f"❌ TTS initialization failed: {e}")
@@ -37,17 +42,24 @@ class TTSManager:
     
     def speak_async(self, text):
         """Speak text asynchronously"""
+        print(f"TTS attempting to speak: {text}")
         def speak():
             with self.tts_lock:
                 if self.tts_engine:
                     try:
+                        print(f"Speaking: {text}")
                         self.tts_engine.say(text)
                         self.tts_engine.runAndWait()
+                        print("Finished speaking")
                     except Exception as e:
-                        print(f"TTS error: {e}")
+                        print(f"TTS error during speech: {e}")
+                else:
+                    print("TTS engine not available")
         
         if self.tts_engine:
             threading.Thread(target=speak, daemon=True).start()
+        else:
+            print("Cannot speak - TTS engine is None")
     
     def handle_eye_alert(self, eye_results):
         """Handle eye-related TTS alerts"""
@@ -55,6 +67,7 @@ class TTSManager:
         
         if current_time - self.last_eye_tts_time > self.eye_tts_cooldown:
             if eye_results['drowsiness_detected']:
+                print("Triggering eye drowsiness alert")
                 self.speak_async("Warning! Eyes have been closed for more than 3 seconds. Please stay alert!")
                 self.last_eye_tts_time = current_time
                 return True
@@ -66,10 +79,12 @@ class TTSManager:
         
         if current_time - self.last_phone_tts_time > self.phone_tts_cooldown:
             if phone_results['continuous_detection']:
+                print("Triggering phone detection alert")
                 self.speak_async("Warning! Mobile phone detected for more than 3 seconds. Please put it away and focus ahead.")
                 self.last_phone_tts_time = current_time
                 return True
             elif phone_results['removal_ready']:
+                print("Triggering phone removal alert")
                 self.speak_async("Good! Mobile phone removed. Keep focusing ahead.")
                 self.last_phone_tts_time = current_time
                 return True
@@ -78,12 +93,24 @@ class TTSManager:
     def handle_gaze_alert(self, gaze_direction, gaze_duration, continuous_direction):
         """Handle gaze-related TTS alerts"""
         current_time = time.time()
+        print(f"\nTTS Gaze Alert Check:")
+        print(f"Direction: {gaze_direction}")
+        print(f"Duration: {gaze_duration:.1f}s")
+        print(f"Continuous: {continuous_direction}")
+        print(f"Time since last alert: {current_time - self.last_gaze_tts_time:.1f}s")
         
-        if current_time - self.last_gaze_tts_time > self.gaze_tts_cooldown:
-            if continuous_direction and gaze_direction in ["left", "right"]:
-                self.speak_async("Please keep your head straight!")
-                self.last_gaze_tts_time = current_time
-                return True
+        # Only proceed if we're not in cooldown
+        if current_time - self.last_gaze_tts_time <= self.gaze_tts_cooldown:
+            print(f"Still in cooldown period ({self.gaze_tts_cooldown - (current_time - self.last_gaze_tts_time):.1f}s remaining)")
+            return False
+            
+        # Check if we should trigger the alert
+        if gaze_direction in ["left", "right"] and gaze_duration >= 3.0:
+            print("Triggering gaze alert - head turned for too long")
+            self.speak_async("Please keep your head straight!")
+            self.last_gaze_tts_time = current_time
+            return True
+            
         return False
     
     def speak_sync(self, text):
