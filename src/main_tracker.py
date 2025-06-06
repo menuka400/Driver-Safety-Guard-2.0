@@ -202,7 +202,12 @@ class FullyGPUOptimizedTracker:
         # Process phone alerts
         phone_results = self.phone_detector.detect(results['frame'])
         
-        # Process gaze alerts
+        # Process gaze alerts with debug info
+        print("\nGaze Detection Debug:")
+        print(f"Direction: {results['gaze_direction']}")
+        print(f"Duration: {self.eye_gaze_detector.gaze_duration_timer:.1f}s")
+        print(f"Continuous: {results.get('continuous_direction', False)}")
+        
         gaze_results = {
             'direction': results['gaze_direction'],
             'detected': results['gaze_detected'],

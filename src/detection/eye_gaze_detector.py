@@ -194,20 +194,38 @@ class EyeGazeDetector:
                     # Determine eye state
                     avg_ear = (left_ear + right_ear) / 2.0
                     eye_state = "Closed" if avg_ear < self.eye_closed_threshold else "Open"
-                      # Get gaze direction
+                    
+                    # Get gaze direction with debug info
                     if self.face_distraction_enabled:
                         gaze_direction = self.get_gaze_direction(face_landmarks.landmark, is_flipped)
+                        print(f"\nGaze Direction Debug:")
+                        print(f"Current Direction: {gaze_direction}")
+                        print(f"Last Direction: {self.last_gaze_direction}")
                         
                         # Track gaze duration
                         if gaze_direction in ["left", "right"]:
+                            # Start or continue timing for left/right gaze
                             if self.gaze_direction_start_time is None or gaze_direction != self.last_gaze_direction:
+                                print(f"Starting new gaze timer for direction: {gaze_direction}")
                                 self.gaze_direction_start_time = current_time
-                                self.gaze_tts_triggered = False
-                            gaze_duration = current_time - self.gaze_direction_start_time
-                            continuous_direction = gaze_duration >= self.gaze_distraction_threshold
+                                self.gaze_duration_timer = 0
+                                continuous_direction = False
+                            else:
+                                # Update duration for continuous gaze
+                                self.gaze_duration_timer = current_time - self.gaze_direction_start_time
+                                print(f"Updating gaze duration: {self.gaze_duration_timer:.1f}s")
+                                # Set continuous_direction if duration exceeds threshold
+                                continuous_direction = self.gaze_duration_timer >= self.gaze_distraction_threshold
+                            
+                            gaze_duration = self.gaze_duration_timer
+                            
+                            print(f"Gaze Duration: {gaze_duration:.1f}s")
+                            print(f"Threshold: {self.gaze_distraction_threshold}s")
+                            print(f"Continuous Direction: {continuous_direction}")
                         else:
+                            print("Resetting gaze timer - direction is straight/unknown")
                             self.gaze_direction_start_time = None
-                            self.gaze_tts_triggered = False
+                            self.gaze_duration_timer = 0
                             gaze_duration = 0
                             continuous_direction = False
                         
@@ -218,6 +236,12 @@ class EyeGazeDetector:
                         cv2.circle(frame, coord, 2, (0, 255, 0), -1)
                     
                     break  # Only process first face
+            else:
+                # No face detected, reset gaze tracking
+                self.gaze_direction_start_time = None
+                self.gaze_duration_timer = 0
+                gaze_direction = "unknown"
+                continuous_direction = False
             
             # Update eye state history
             self.eye_state_history.append(eye_state)
@@ -241,6 +265,7 @@ class EyeGazeDetector:
             
             self.last_eye_state = eye_state
             
+            # Return detection results with updated gaze information
             return {
                 'eye_state': smoothed_state,
                 'left_ear': left_ear,
