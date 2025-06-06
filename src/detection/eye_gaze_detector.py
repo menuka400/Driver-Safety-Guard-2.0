@@ -78,8 +78,13 @@ class EyeGazeDetector:
             eye_coords.append((x, y))
         return eye_coords
     
-    def get_gaze_direction(self, landmarks):
-        """Get gaze direction based on nose and eye positions"""
+    def get_gaze_direction(self, landmarks, is_flipped=True):
+        """Get gaze direction based on nose and eye positions
+        
+        Args:
+            landmarks: MediaPipe face landmarks
+            is_flipped: Whether the frame is horizontally flipped (webcam mirror mode)
+        """
         try:
             nose = landmarks[1]  # Nose tip
             left_eye = landmarks[33]
@@ -90,9 +95,11 @@ class EyeGazeDetector:
             center_x = (left_eye.x + right_eye.x) / 2
             
             if nose.x < center_x - self.gaze_threshold:
-                return "right"
+                # In flipped mode, this corresponds to looking left (user's perspective)
+                return "left" if is_flipped else "right"
             elif nose.x > center_x + self.gaze_threshold:
-                return "left"
+                # In flipped mode, this corresponds to looking right (user's perspective)
+                return "right" if is_flipped else "left"
             else:
                 return "straight"
         except Exception as e:
@@ -129,16 +136,20 @@ class EyeGazeDetector:
         # Check if TTS already triggered for this gaze session
         if self.tts_triggered_for_current_gaze:
             return False
-        
-        # Check cooldown period
+          # Check cooldown period
         current_time = time.time()
         if current_time - self.last_gaze_tts_time < self.gaze_tts_cooldown:
             return False
         
         return True
     
-    def detect(self, frame):
-        """Detect eye state and calculate metrics"""
+    def detect(self, frame, is_flipped=True):
+        """Detect eye state and calculate metrics
+        
+        Args:
+            frame: Input video frame
+            is_flipped: Whether the frame is horizontally flipped (webcam mirror mode)
+        """
         if not self.eye_detection_enabled:
             return {
                 'eye_state': "Unknown",
@@ -183,10 +194,9 @@ class EyeGazeDetector:
                     # Determine eye state
                     avg_ear = (left_ear + right_ear) / 2.0
                     eye_state = "Closed" if avg_ear < self.eye_closed_threshold else "Open"
-                    
-                    # Get gaze direction
+                      # Get gaze direction
                     if self.face_distraction_enabled:
-                        gaze_direction = self.get_gaze_direction(face_landmarks.landmark)
+                        gaze_direction = self.get_gaze_direction(face_landmarks.landmark, is_flipped)
                         
                         # Track gaze duration
                         if gaze_direction in ["left", "right"]:

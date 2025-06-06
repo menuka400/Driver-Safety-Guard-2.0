@@ -9,16 +9,16 @@ import torch
 import os
 
 # Import all our custom modules
-from .core.gpu_manager import GPUManager
-from .core.config_manager import ConfigManager
-from .detection.phone_detector import PhoneDetector
-from .detection.face_detector import FaceDetector
-from .detection.person_detector import PersonDetector
-from .detection.eye_gaze_detector import EyeGazeDetector
-from .tracking.object_tracker import ObjectTracker
-from .tracking.feature_extractor import FeatureExtractor
-from .communication.esp32_communicator import ESP32Communicator
-from .communication.tts_manager import TTSManager
+from core.gpu_manager import GPUManager
+from core.config_manager import ConfigManager
+from detection.phone_detector import PhoneDetector
+from detection.face_detector import FaceDetector
+from detection.person_detector import PersonDetector
+from detection.eye_gaze_detector import EyeGazeDetector
+from tracking.object_tracker import ObjectTracker
+from tracking.feature_extractor import FeatureExtractor
+from communication.esp32_communicator import ESP32Communicator
+from communication.tts_manager import TTSManager
 
 class FullyGPUOptimizedTracker:
     def __init__(self, yolo_model_path, face_model_path, hrnetv2_model_path=None, config_path=None):
@@ -85,16 +85,20 @@ class FullyGPUOptimizedTracker:
             feature_dim=tracking_config["feature_dim"],
             hrnetv2_model_path=hrnetv2_model_path
         )
-        
-        # Timing and state management
+          # Timing and state management
         self.last_eye_tts_time = 0
         self.last_gaze_tts_time = 0
         self.last_phone_tts_time = 0
         
         print("✅ Fully GPU-Optimized Tracker initialized successfully!")
     
-    def process_detections_gpu(self, frame):
-        """Process all detections with GPU acceleration"""
+    def process_detections_gpu(self, frame, is_flipped=False):
+        """Process all detections with GPU acceleration
+        
+        Args:
+            frame: Input video frame
+            is_flipped: Whether the frame is horizontally flipped (for webcam mirror mode)
+        """
         frame_start = time.time()
         
         # Preprocess frame on GPU
@@ -121,9 +125,8 @@ class FullyGPUOptimizedTracker:
             phone_results = self.phone_detector.detect(processed_frame)
             phone_detections = [det['bbox'] + [det['confidence']] for det in phone_results['detections']]
             face_detections = self.face_detector.detect_faces_gpu(processed_frame)
-            
-            # Process eye detection and gaze tracking
-            eye_results = self.eye_gaze_detector.detect(processed_frame)
+              # Process eye detection and gaze tracking
+            eye_results = self.eye_gaze_detector.detect(processed_frame, is_flipped)
             eye_state = eye_results['eye_state']
             left_ear = eye_results['left_ear']
             right_ear = eye_results['right_ear']
@@ -366,9 +369,13 @@ class FullyGPUOptimizedTracker:
                     break
                 
                 frame_count += 1
+                  # Mirror frame for better user experience (webcam only)
+                is_flipped = video_path is None
+                if is_flipped:
+                    frame = cv2.flip(frame, 1)
                 
                 # Process detections
-                results = self.process_detections_gpu(frame)
+                results = self.process_detections_gpu(frame, is_flipped)
                 total_detection_time += results['detection_time']
                 
                 # Process tracking
