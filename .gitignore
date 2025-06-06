@@ -1,0 +1,4 @@
+# Ignore only these specific model files
+models/hrnetv2_w32_imagenet_pretrained.pth
+models/yolo11x.pt
+models/yolov11l-face.pt
