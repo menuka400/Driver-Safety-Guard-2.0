@@ -116,12 +116,19 @@ void checkSmokeSensor() {
         // Read smoke sensor
         int smokeValue = analogRead(MQ2_PIN);
         
+        // Send smoke level to Blynk app (Virtual Pin V3)
+        Blynk.virtualWrite(V3, smokeValue);
+        
         // Print sensor value
-        debug("Smoke Sensor Value: " + String(smokeValue));
+        debug("=== Smoke Sensor Reading ===");
+        debug("Raw ADC Value: " + String(smokeValue));
+        debug("Threshold: " + String(SMOKE_THRESHOLD));
         
         // Check if smoke is detected
         if (smokeValue > SMOKE_THRESHOLD) {
             debug("⚠️ Smoke Detected! Level: " + String(smokeValue));
+            // Send alert notification to Blynk app
+            Blynk.logEvent("smoke_alert", "High smoke level detected!");
             // Directly control smoking LED and buzzer
             setRGBColor(LED_SMOKING_R, LED_SMOKING_G, LED_SMOKING_B, true);
             digitalWrite(BUZZER_PIN, HIGH);
@@ -139,6 +146,7 @@ void checkSmokeSensor() {
                 alerts[3].isDetecting = false;
             }
         }
+        debug("============================");
     }
 }
 
@@ -275,7 +283,6 @@ BLYNK_WRITE(V0) {
     if (value == 1 && !systemOnline) {
         systemOnline = true;
         Serial.println("System is ONLINE");
-        Blynk.virtualWrite(V2, "ONLINE");
     }
 }
 
@@ -285,7 +292,6 @@ BLYNK_WRITE(V1) {
     if (value == 1 && systemOnline) {
         systemOnline = false;
         Serial.println("System is OFFLINE");
-        Blynk.virtualWrite(V2, "OFFLINE");
         turnOffAllLEDs();
         digitalWrite(BUZZER_PIN, LOW);
     }
@@ -370,7 +376,6 @@ void setup() {
     
     // Initialize Blynk
     Blynk.begin(BLYNK_AUTH_TOKEN, ssid, password);
-    Blynk.virtualWrite(V2, "ONLINE");
     
     // Set up MDNS responder
     if (MDNS.begin("esp32")) {
