@@ -270,6 +270,12 @@ void handleStop() {
     server.send(200, "text/plain", "Alerts stopped");
 }
 
+// Handle status request
+void handleStatus() {
+    String status = "{\"status\":\"ok\",\"uptime\":\"" + String(millis()/1000) + "\"}";
+    server.send(200, "application/json", status);
+}
+
 // Handle root page
 void handleRoot() {
     String html = "<html><head>";
@@ -431,6 +437,7 @@ void setup() {
         server.on("/", HTTP_GET, handleRoot);
         server.on("/trigger", HTTP_POST, handleTrigger);
         server.on("/stop", HTTP_POST, handleStop);
+        server.on("/status", HTTP_GET, handleStatus);  // Add status endpoint
 
         // Start server
         server.begin();
