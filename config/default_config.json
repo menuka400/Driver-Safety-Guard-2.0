@@ -27,11 +27,10 @@
         "memory_fraction": 0.8,
         "benchmark": true
     },    "esp32": {
-        "ip_address": "192.168.1.100",
+        "ip_address": "192.168.1.121",
         "port": 80,
-        "timeout": 5,
-        "retry_attempts": 3,
-        "alert_cooldown": 2.0
+        "timeout": 3,
+        "retry_attempts": 5
     },
     "tts": {
         "enabled": true,
