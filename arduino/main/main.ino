@@ -9,6 +9,12 @@
 #include <BlynkSimpleEsp32.h>
 #include <WebServer.h>
 #include <ESPmDNS.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
+// Blynk virtual pins
+#define VPIN_THRESHOLD V13  // Slider to set threshold
+#define VPIN_TEMPERATURE V14  // Temperature reading
 
 // WiFi credentials
 const char* ssid = "SLT_FIBRE";
@@ -20,6 +26,11 @@ BlynkTimer timer;
 
 // System state
 bool systemOnline = true;
+
+// Temperature sensor setup
+#define ONE_WIRE_BUS 13  // DS18B20 data pin connected to GPIO13
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensors(&oneWire);
 
 // Pin definitions for RGB LEDs
 // Bulb 1 (Distracted)
@@ -50,7 +61,7 @@ const int LED_IDLE_B = 5;
 // Buzzer and Sensor pins
 const int BUZZER_PIN = 15;
 const int MQ2_PIN = 36;
-const int SMOKE_THRESHOLD = 400;
+int smokeThreshold = 400;  // Changed to variable instead of const
 
 // Timing constants
 const unsigned long BUZZER_DURATION = 4000;    // 4 seconds
@@ -122,10 +133,10 @@ void checkSmokeSensor() {
         // Print sensor value
         debug("=== Smoke Sensor Reading ===");
         debug("Raw ADC Value: " + String(smokeValue));
-        debug("Threshold: " + String(SMOKE_THRESHOLD));
+        debug("Current Threshold: " + String(smokeThreshold));
         
         // Check if smoke is detected
-        if (smokeValue > SMOKE_THRESHOLD) {
+        if (smokeValue > smokeThreshold) {
             debug("⚠️ Smoke Detected! Level: " + String(smokeValue));
             // Send alert notification to Blynk app
             Blynk.logEvent("smoke_alert", "High smoke level detected!");
@@ -297,9 +308,40 @@ BLYNK_WRITE(V1) {
     }
 }
 
+// Blynk function to handle threshold slider changes
+BLYNK_WRITE(VPIN_THRESHOLD) {
+    smokeThreshold = param.asInt();
+    debug("Smoke threshold updated to: " + String(smokeThreshold));
+}
+
+// Blynk function to handle app connection
+BLYNK_CONNECTED() {
+    debug("Connected to Blynk server");
+    // Sync threshold value from app
+    Blynk.syncVirtual(VPIN_THRESHOLD);
+}
+
+// Function to read and send temperature
+void sendTemperature() {
+    if (!systemOnline) return;
+    
+    sensors.requestTemperatures();
+    float tempC = sensors.getTempCByIndex(0);
+
+    debug("=== Temperature Reading ===");
+    debug("Temperature: " + String(tempC) + " °C");
+    debug("========================");
+
+    // Send temperature to Blynk virtual pin V14
+    Blynk.virtualWrite(VPIN_TEMPERATURE, tempC);
+}
+
 // Handle status request
 void handleStatus() {
-    String status = "{\"status\":\"ok\",\"uptime\":\"" + String(millis()/1000) + "\"}";
+    sensors.requestTemperatures();
+    float tempC = sensors.getTempCByIndex(0);
+    String status = "{\"status\":\"ok\",\"uptime\":\"" + String(millis()/1000) + 
+                   "\",\"temperature\":\"" + String(tempC) + "\"}";
     server.send(200, "application/json", status);
 }
 
@@ -366,6 +408,9 @@ void setup() {
     pinMode(BUZZER_PIN, OUTPUT);
     digitalWrite(BUZZER_PIN, LOW);
     
+    // Initialize temperature sensor
+    sensors.begin();
+    
     // Connect to WiFi
     WiFi.begin(ssid, password);
     while (WiFi.status() != WL_CONNECTED) {
@@ -377,23 +422,27 @@ void setup() {
     // Initialize Blynk
     Blynk.begin(BLYNK_AUTH_TOKEN, ssid, password);
     
+    // Set initial threshold value to Blynk
+    Blynk.virtualWrite(VPIN_THRESHOLD, smokeThreshold);
+    
     // Set up MDNS responder
     if (MDNS.begin("esp32")) {
         Serial.println("MDNS responder started");
     }
     
     // Set up web server routes
-    server.on("/status", HTTP_GET, handleStatus);  // Add status endpoint
+    server.on("/status", HTTP_GET, handleStatus);
     server.on("/trigger", HTTP_POST, handleTrigger);
-    server.on("/stop", HTTP_POST, handleStop);  // Add stop endpoint
+    server.on("/stop", HTTP_POST, handleStop);
     server.begin();
     
     // Display connection information
     displayConnectionInfo();
     
-    // Set up timer for checking alerts
+    // Set up timers
     timer.setInterval(100, checkAlertsAndBuzzer);
     timer.setInterval(500, checkSmokeSensor);
+    timer.setInterval(2000, sendTemperature);  // Send temperature every 2 seconds
 }
 
 void loop() {
