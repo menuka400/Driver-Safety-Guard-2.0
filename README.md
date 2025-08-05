@@ -55,7 +55,11 @@ Driver Safety Guard 2.0 is a cutting-edge, **fully GPU-optimized** AI system tha
 
 ## 🎬 **Demo & Screenshots**
 
-### 🖥️ **Real-time Detection Interface**
+### � **Project Poster**
+![Driver Safety Guard 2.0 Poster](IOT%20Poster.pdf)
+*Professional IoT project poster showcasing the complete system architecture and features*
+
+### �🖥️ **Real-time Detection Interface**
 ```
 🚀 Fully GPU-Optimized Mobile Phone and Face Tracker with Gaze Direction
 ======================================================================
@@ -78,12 +82,19 @@ Features:
 - **Remote Control**: System on/off, sensitivity adjustments
 - **Environmental Monitoring**: Temperature and smoke level readings
 - **Alert History**: Comprehensive logging and analytics
+- **Interactive Controls**: Threshold adjustment sliders and manual testing buttons
 
 ### 🔧 **ESP32 Hardware Setup**
 - **RGB LED Indicators**: Color-coded alerts for different behaviors
 - **Audio Alerts**: Buzzer notifications for immediate attention
 - **Sensor Integration**: MQ2 smoke detector for smoking detection
 - **Temperature Monitoring**: DS18B20 sensor for environmental data
+- **Web Interface**: Browser-based configuration and monitoring dashboard
+
+### 📊 **Visual Documentation**
+- **System Poster**: [View Project Poster](IOT%20Poster.pdf) - Complete system overview
+- **Architecture Diagrams**: Detailed technical flow and component interaction
+- **Performance Charts**: Real-time detection accuracy and system benchmarks
 
 ---
 
@@ -408,7 +419,29 @@ Access the ESP32 web dashboard at: `http://YOUR_ESP32_IP/`
 
 ---
 
-## 🛠️ **Development & Contributing**
+## �️ **Media & Presentations**
+
+### 🎨 **Project Showcase Materials**
+- **📊 [IoT Project Poster](IOT%20Poster.pdf)** - Comprehensive visual overview of the Driver Safety Guard 2.0 system
+- **🏗️ System Architecture Diagram** - Detailed technical architecture showcase
+- **📱 Blynk Dashboard Screenshots** - Mobile app interface demonstrations
+- **🔧 Hardware Setup Photos** - ESP32 and sensor integration examples
+
+### 🎯 **Key Presentation Highlights**
+- **Real-time AI Detection**: Live demonstration of phone, face, and drowsiness detection
+- **IoT Integration**: ESP32 hardware alerts and Blynk mobile app control
+- **Performance Metrics**: GPU optimization and detection accuracy statistics
+- **Modular Architecture**: Professional software engineering practices
+
+### 📈 **Project Impact & Applications**
+- **Road Safety Enhancement**: Reducing driver distraction and drowsiness incidents
+- **IoT Innovation**: Advanced hardware-software integration with mobile connectivity
+- **AI Implementation**: State-of-the-art machine learning models in real-world application
+- **Educational Value**: Comprehensive example of modern embedded AI systems
+
+---
+
+## �🛠️ **Development & Contributing**
 
 ### 🏗️ **Project Structure**
 ```
