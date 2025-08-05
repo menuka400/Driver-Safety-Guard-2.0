@@ -1,6 +1,6 @@
-#define BLYNK_TEMPLATE_ID "TMPL6dXyl2CWF"
-#define BLYNK_TEMPLATE_NAME "Quickstart Device"
-#define BLYNK_AUTH_TOKEN "niTJWQMeIJB_m8hmD9YJuBbcVm8jj5r1"
+#define BLYNK_TEMPLATE_ID "TMPL657qAruym"
+#define BLYNK_TEMPLATE_NAME "Quickstart Template"
+#define BLYNK_AUTH_TOKEN "1NSm1YalmNpNyksHP_E03BfIdCWT9kEw"
 
 #define BLYNK_PRINT Serial
 
@@ -26,6 +26,9 @@ BlynkTimer timer;
 
 // System state
 bool systemOnline = true;
+bool isConnectedToBlynk = false;
+bool wifiConnected = false;
+bool connectionSoundPlayed = false; // Flag to track if connection sound was played
 
 // Temperature sensor setup
 #define ONE_WIRE_BUS 13  // DS18B20 data pin connected to GPIO13
@@ -63,10 +66,17 @@ const int BUZZER_PIN = 15;
 const int MQ2_PIN = 36;
 int smokeThreshold = 400;  // Changed to variable instead of const
 
+// Idle LED brightness control
+const int IDLE_GREEN_BRIGHTNESS = 10;
+
 // Timing constants
 const unsigned long BUZZER_DURATION = 4000;    // 4 seconds
 const unsigned long DETECTION_TIMEOUT = 2000;   // 2 seconds
 const unsigned long SENSOR_CHECK_INTERVAL = 500; // 0.5 seconds
+
+// Connection sound timing
+const unsigned long CONNECTION_BEEP_DURATION = 150; // 150ms per beep
+const unsigned long CONNECTION_BEEP_PAUSE = 100;    // 100ms pause between beeps
 
 // Debug flag
 bool DEBUG = true;
@@ -92,6 +102,60 @@ AlertState alerts[4] = {
     {false, false, 0, 0}
 };
 
+// Function to play connection success sound
+void playConnectionSuccessSound() {
+    debug("🎵 Playing connection success sound...");
+    
+    // Play 3 short beeps to indicate successful connection
+    for (int i = 0; i < 3; i++) {
+        digitalWrite(BUZZER_PIN, HIGH);
+        delay(CONNECTION_BEEP_DURATION);
+        digitalWrite(BUZZER_PIN, LOW);
+        
+        // Don't add pause after the last beep
+        if (i < 2) {
+            delay(CONNECTION_BEEP_PAUSE);
+        }
+    }
+    
+    debug("🎵 Connection success sound completed!");
+}
+
+// Function to check if both WiFi and Blynk are connected and play sound if needed
+void checkConnectionAndPlaySound() {
+    bool currentWifiStatus = (WiFi.status() == WL_CONNECTED);
+    bool currentBlynkStatus = isConnectedToBlynk;
+    
+    // Check if both are connected and sound hasn't been played yet
+    if (systemOnline && currentWifiStatus && currentBlynkStatus && !connectionSoundPlayed) {
+        playConnectionSuccessSound();
+        connectionSoundPlayed = true;
+        debug("🎉 Full connection established! WiFi + Blynk connected");
+    }
+    
+    // Reset flag if either connection is lost
+    if (!currentWifiStatus || !currentBlynkStatus) {
+        connectionSoundPlayed = false;
+    }
+}
+
+// Function to update Idle LED status
+void updateIdleLED() {
+    if (WiFi.status() == WL_CONNECTED && isConnectedToBlynk) {
+        // Connected to WiFi and Blynk - Green with brightness control
+        digitalWrite(LED_IDLE_R, LOW);
+        analogWrite(LED_IDLE_G, IDLE_GREEN_BRIGHTNESS);
+        digitalWrite(LED_IDLE_B, LOW);
+        debug("💚 Idle LED: GREEN (Connected) - Brightness: " + String(IDLE_GREEN_BRIGHTNESS));
+    } else {
+        // Not connected or connecting - Red
+        digitalWrite(LED_IDLE_R, HIGH);
+        digitalWrite(LED_IDLE_G, LOW);
+        digitalWrite(LED_IDLE_B, LOW);
+        debug("❤️ Idle LED: RED (Disconnected/Connecting)");
+    }
+}
+
 // Function to set RGB LED color
 void setRGBColor(int redPin, int greenPin, int bluePin, bool state) {
     if (!systemOnline) {
@@ -105,13 +169,13 @@ void setRGBColor(int redPin, int greenPin, int bluePin, bool state) {
     digitalWrite(bluePin, state ? HIGH : LOW);
 }
 
-// Function to turn off all LEDs
+// Function to turn off all LEDs (except Idle LED)
 void turnOffAllLEDs() {
     setRGBColor(LED_DISTRACTED_R, LED_DISTRACTED_G, LED_DISTRACTED_B, false);
     setRGBColor(LED_DROWSY_R, LED_DROWSY_G, LED_DROWSY_B, false);
     setRGBColor(LED_MOBILE_R, LED_MOBILE_G, LED_MOBILE_B, false);
     setRGBColor(LED_SMOKING_R, LED_SMOKING_G, LED_SMOKING_B, false);
-    setRGBColor(LED_IDLE_R, LED_IDLE_G, LED_IDLE_B, false);
+    // Don't turn off Idle LED here - it has its own status function
 }
 
 // Function to check MQ2 sensor
@@ -128,7 +192,9 @@ void checkSmokeSensor() {
         int smokeValue = analogRead(MQ2_PIN);
         
         // Send smoke level to Blynk app (Virtual Pin V3)
-        Blynk.virtualWrite(V3, smokeValue);
+        if (isConnectedToBlynk) {
+            Blynk.virtualWrite(V3, smokeValue);
+        }
         
         // Print sensor value
         debug("=== Smoke Sensor Reading ===");
@@ -139,7 +205,9 @@ void checkSmokeSensor() {
         if (smokeValue > smokeThreshold) {
             debug("⚠️ Smoke Detected! Level: " + String(smokeValue));
             // Send alert notification to Blynk app
-            Blynk.logEvent("smoke_alert", "High smoke level detected!");
+            if (isConnectedToBlynk) {
+                Blynk.logEvent("smoke_alert", "High smoke level detected!");
+            }
             // Directly control smoking LED and buzzer
             setRGBColor(LED_SMOKING_R, LED_SMOKING_G, LED_SMOKING_B, true);
             digitalWrite(BUZZER_PIN, HIGH);
@@ -168,6 +236,7 @@ void displayConnectionInfo() {
     debug("📱 Connected to WiFi: " + String(ssid));
     debug("📶 Signal Strength: " + String(WiFi.RSSI()) + " dBm");
     debug("🔒 MAC Address: " + WiFi.macAddress());
+    debug("☁️ Blynk Connected: " + String(isConnectedToBlynk ? "YES" : "NO"));
     debug("----------------------------------------");
     debug("🌐 NETWORK INFORMATION");
     debug("----------------------------------------");
@@ -294,6 +363,8 @@ BLYNK_WRITE(V0) {
     if (value == 1 && !systemOnline) {
         systemOnline = true;
         Serial.println("System is ONLINE");
+        updateIdleLED(); // Update idle LED when system comes online
+        connectionSoundPlayed = false; // Reset flag to allow sound when system comes online
     }
 }
 
@@ -305,6 +376,8 @@ BLYNK_WRITE(V1) {
         Serial.println("System is OFFLINE");
         turnOffAllLEDs();
         digitalWrite(BUZZER_PIN, LOW);
+        updateIdleLED(); // Update idle LED when system goes offline
+        connectionSoundPlayed = false; // Reset flag when system goes offline
     }
 }
 
@@ -316,9 +389,22 @@ BLYNK_WRITE(VPIN_THRESHOLD) {
 
 // Blynk function to handle app connection
 BLYNK_CONNECTED() {
-    debug("Connected to Blynk server");
+    debug("🎉 Connected to Blynk server!");
+    isConnectedToBlynk = true;
+    updateIdleLED(); // Update LED to green when Blynk connects
     // Sync threshold value from app
     Blynk.syncVirtual(VPIN_THRESHOLD);
+    
+    // Check if we should play connection sound
+    checkConnectionAndPlaySound();
+}
+
+// Blynk function to handle app disconnection
+BLYNK_DISCONNECTED() {
+    debug("⚠️ Disconnected from Blynk server!");
+    isConnectedToBlynk = false;
+    updateIdleLED(); // Update LED to red when Blynk disconnects
+    connectionSoundPlayed = false; // Reset flag when Blynk disconnects
 }
 
 // Function to read and send temperature
@@ -332,8 +418,35 @@ void sendTemperature() {
     debug("Temperature: " + String(tempC) + " °C");
     debug("========================");
 
-    // Send temperature to Blynk virtual pin V14
-    Blynk.virtualWrite(VPIN_TEMPERATURE, tempC);
+    // Send temperature to Blynk virtual pin V14 only if connected
+    if (isConnectedToBlynk) {
+        Blynk.virtualWrite(VPIN_TEMPERATURE, tempC);
+    }
+}
+
+// Function to check connection status and update LED
+void checkConnectionStatus() {
+    static bool lastWiFiStatus = false;
+    static bool lastBlynkStatus = false;
+    
+    bool currentWiFiStatus = (WiFi.status() == WL_CONNECTED);
+    bool currentBlynkStatus = Blynk.connected();
+    
+    // Update Blynk connection status
+    if (currentBlynkStatus != isConnectedToBlynk) {
+        isConnectedToBlynk = currentBlynkStatus;
+        updateIdleLED();
+    }
+    
+    // Check if status changed
+    if (currentWiFiStatus != lastWiFiStatus || currentBlynkStatus != lastBlynkStatus) {
+        updateIdleLED();
+        lastWiFiStatus = currentWiFiStatus;
+        lastBlynkStatus = currentBlynkStatus;
+    }
+    
+    // Check for connection sound
+    checkConnectionAndPlaySound();
 }
 
 // Handle status request
@@ -341,7 +454,9 @@ void handleStatus() {
     sensors.requestTemperatures();
     float tempC = sensors.getTempCByIndex(0);
     String status = "{\"status\":\"ok\",\"uptime\":\"" + String(millis()/1000) + 
-                   "\",\"temperature\":\"" + String(tempC) + "\"}";
+                   "\",\"temperature\":\"" + String(tempC) + 
+                   "\",\"wifi_connected\":\"" + String(WiFi.status() == WL_CONNECTED) +
+                   "\",\"blynk_connected\":\"" + String(isConnectedToBlynk) + "\"}";
     server.send(200, "application/json", status);
 }
 
@@ -404,6 +519,9 @@ void setup() {
     // Initialize all LED pins
     setupLEDs();
     
+    // Set Idle LED to RED initially (not connected)
+    updateIdleLED();
+    
     // Initialize buzzer pin
     pinMode(BUZZER_PIN, OUTPUT);
     digitalWrite(BUZZER_PIN, LOW);
@@ -411,19 +529,26 @@ void setup() {
     // Initialize temperature sensor
     sensors.begin();
     
+    debug("🔄 Connecting to WiFi...");
     // Connect to WiFi
     WiFi.begin(ssid, password);
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
         Serial.print(".");
+        updateIdleLED(); // Keep showing red while connecting
     }
-    Serial.println("\nWiFi connected");
+    Serial.println("\n✅ WiFi connected");
+    wifiConnected = true;
+    updateIdleLED(); // Update LED status after WiFi connection
     
+    debug("🔄 Connecting to Blynk...");
     // Initialize Blynk
     Blynk.begin(BLYNK_AUTH_TOKEN, ssid, password);
     
     // Set initial threshold value to Blynk
-    Blynk.virtualWrite(VPIN_THRESHOLD, smokeThreshold);
+    if (isConnectedToBlynk) {
+        Blynk.virtualWrite(VPIN_THRESHOLD, smokeThreshold);
+    }
     
     // Set up MDNS responder
     if (MDNS.begin("esp32")) {
@@ -443,10 +568,11 @@ void setup() {
     timer.setInterval(100, checkAlertsAndBuzzer);
     timer.setInterval(500, checkSmokeSensor);
     timer.setInterval(2000, sendTemperature);  // Send temperature every 2 seconds
+    timer.setInterval(1000, checkConnectionStatus); // Check connection status every second
 }
 
 void loop() {
     Blynk.run();
     timer.run();
     server.handleClient();
-} 
+}

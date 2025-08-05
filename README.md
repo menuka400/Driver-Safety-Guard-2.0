@@ -342,7 +342,7 @@ The system uses JSON configuration files located in `config/`. Key parameters in
 ```json
 {
   "esp32": {
-    "ip": "192.168.1.121",
+    "ip": "10.27.146.54",
     "port": 80,
     "alert_cooldown": 2.0
   }

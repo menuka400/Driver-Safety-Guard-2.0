@@ -48,7 +48,7 @@ class TestObjectTrackingIntegration(unittest.TestCase):
                 "fps": 30
             },
             "esp32": {
-                "ip_address": "192.168.1.121",
+                "ip_address": "10.27.146.54",
                 "port": 80,
                 "timeout": 5
             },

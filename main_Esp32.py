@@ -31,7 +31,7 @@ class FullyGPUOptimizedTracker:
         print("🚀 Initializing Fully GPU-Optimized Tracker...")
         
         # ESP32 HTTP Configuration
-        self.esp32_ip = "192.168.1.121"  # Change this to your ESP32's IP address
+        self.esp32_ip = "10.27.146.54"  # Change this to your ESP32's IP address
         self.esp32_port = 80  # HTTP port
         self.esp32_url = f"http://{self.esp32_ip}:{self.esp32_port}"
         self.last_alert_time = 0

@@ -1,6 +1,6 @@
-#define BLYNK_TEMPLATE_ID "TMPL6dXyl2CWF"
+#define BLYNK_TEMPLATE_ID "TMPL657qAruym"
 #define BLYNK_TEMPLATE_NAME "Quickstart Device"
-#define BLYNK_AUTH_TOKEN "niTJWQMeIJB_m8hmD9YJuBbcVm8jj5r1"
+#define BLYNK_AUTH_TOKEN "POIS1WEDdNZWrkH8yA3RIjlqFaGFdVjj"
 
 #include <WiFi.h>
 #include <OneWire.h>

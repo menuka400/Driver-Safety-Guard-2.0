@@ -1,0 +1,55 @@
+#define RELAY1 26
+#define RELAY2 27
+#define LED_PIN 25
+#define ENCODER_CLK 34
+#define ENCODER_DT 35
+#define BUTTON_PIN 33
+
+volatile int brightness = 128;  // Initial brightness (range: 0-255)
+int lastClkState;
+bool buttonPressed = false;
+
+void IRAM_ATTR readEncoder() {
+  int clkState = digitalRead(ENCODER_CLK);
+  int dtState = digitalRead(ENCODER_DT);
+  if (clkState != lastClkState) {
+    if (dtState != clkState) {
+      brightness += 10;
+    } else {
+      brightness -= 10;
+    }
+    brightness = constrain(brightness, 0, 255);
+  }
+  lastClkState = clkState;
+}
+
+void setup() {
+  pinMode(RELAY1, OUTPUT);
+  pinMode(RELAY2, OUTPUT);
+  digitalWrite(RELAY1, HIGH);  // Turn relays ON
+  digitalWrite(RELAY2, HIGH);
+
+  pinMode(LED_PIN, OUTPUT);
+  ledcAttachPin(LED_PIN, 0);
+  ledcSetup(0, 5000, 8);  // PWM channel 0, 5KHz, 8-bit resolution
+
+  pinMode(ENCODER_CLK, INPUT);
+  pinMode(ENCODER_DT, INPUT);
+  lastClkState = digitalRead(ENCODER_CLK);
+  attachInterrupt(digitalPinToInterrupt(ENCODER_CLK), readEncoder, CHANGE);
+
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+}
+
+void loop() {
+  ledcWrite(0, brightness);  // Update LED brightness
+
+  if (digitalRead(BUTTON_PIN) == LOW && !buttonPressed) {
+    delay(50);  // Debounce
+    if (digitalRead(BUTTON_PIN) == LOW) {
+      buttonPressed = true;
+      digitalWrite(RELAY1, LOW);
+      digitalWrite(RELAY2, LOW);
+    }
+  }
+}
