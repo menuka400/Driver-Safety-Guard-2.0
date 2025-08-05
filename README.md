@@ -624,6 +624,9 @@ If you found Driver Safety Guard 2.0 useful, please give it a ⭐ on GitHub!
 
 **📧 Contact**  | **📱 Social Media**
 :---: | :---:
-[menuka400@example.com](mailto:menuka400@example.com) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/m-h-jayasuriya/)
-
+[menuka400@example.com](mailto:menuka400@gmail.com) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/m-h-jayasuriya/)
+[k.b.ravindusankalpaac@gmail.com](mailto:k.b.ravindusankalpaac@gmail.com) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/ravindusankalpa/)
+[Pramodyapriyasanka6@gmail.com](mailto:Pramodyapriyasanka6@gmail.com) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/pramodya-priyasanka-752314224/)
+[nipunsmk@gmail.com](mailto:nipunsmk@gmail.com) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](-)
+[Chathuranga155](mailto:Chathuranga155) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/chathuranga-bandara-a339a3175/)
 </div>
