@@ -1,15 +1,18 @@
 # 🚗 Driver Safety Guard 2.0
 
 <div align="center">
+## 🎬 **Demo & Screenshots**
 
-!### 📊 **Project Poster**
+### 📊 **Project Poster**
 <div align="center">
 
 ![Driver Safety Guard 2.0 - IoT Poster](https://github.com/menuka400/Driver-Safety-Guard-2.0/blob/main/IOT%20Poster.png)
 
 *Professional IoT project poster showcasing the complete system architecture, research methodology, hardware design, and real-world applications of the Driver Safety Guard 2.0 system*
 
-</div>iver Safety Guard](https://img.shields.io/badge/Driver-Safety%20Guard%202.0-blue?style=for-the-badge&logo=opencv)
+</div>
+
+### 🖥️ **Real-time Detection Interface**er Safety Guard](https://img.shields.io/badge/Driver-Safety%20Guard%202.0-blue?style=for-the-badge&logo=opencv)
 ![Python](https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red?style=for-the-badge&logo=pytorch)
 ![ESP32](https://img.shields.io/badge/ESP32-IoT-green?style=for-the-badge&logo=espressif)
