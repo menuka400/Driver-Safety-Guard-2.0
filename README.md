@@ -552,7 +552,7 @@ ls -la models/
 - 📊 [System Architecture](docs/SYSTEM_FLOWCHART.md)
 
 #### **Community Support**
-- 📧 **Direct Contact**: [menuka400@example.com](mailto:menuka400@gmail.com)
+- 📧 **Direct Contact**: [menuka400@gmail.com](mailto:menuka400@gmail.com)
 ---
 
 ## 📜 **License & Legal**
