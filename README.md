@@ -622,8 +622,8 @@ If you found Driver Safety Guard 2.0 useful, please give it a ⭐ on GitHub!
 
 <div align="center">
 
-**📧 Contact** | **🌐 Website** | **📱 Social Media**
-:---: | :---: | :---:
-[menuka400@example.com](mailto:menuka400@example.com) | [Project Homepage](https://menuka400.github.io/Driver-Safety-Guard-2.0) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://linkedin.com/in/menuka400)
+**📧 Contact**  | **📱 Social Media**
+:---: | :---:
+[menuka400@example.com](mailto:menuka400@example.com) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/m-h-jayasuriya/)
 
 </div>
