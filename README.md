@@ -624,5 +624,5 @@ If you found Driver Safety Guard 2.0 useful, please give it a ⭐ on GitHub!
 [k.b.ravindusankalpaac@gmail.com](mailto:k.b.ravindusankalpaac@gmail.com) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/ravindusankalpa/)
 [Pramodyapriyasanka6@gmail.com](mailto:Pramodyapriyasanka6@gmail.com) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/pramodya-priyasanka-752314224/)
 [nipunsmk@gmail.com](mailto:nipunsmk@gmail.com) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](-)
-[k.b.ravindusankalpaac@gmail.com](mailto:k.b.ravindusankalpaac@gmail.com) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/chathuranga-bandara-a339a3175/)
+[chathuranga155](mailto:chathuranga155) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/chathuranga-bandara-a339a3175/)
 </div>
