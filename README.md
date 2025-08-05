@@ -610,7 +610,7 @@ If you found Driver Safety Guard 2.0 useful, please give it a ⭐ on GitHub!
 
 [![GitHub Stars](https://img.shields.io/github/stars/menuka400/Driver-Safety-Guard-2.0?style=social)](https://github.com/menuka400/Driver-Safety-Guard-2.0)
 
-**Made with ❤️ by [Team]**
+**Made with ❤️ by Team**
 
 *Driving towards a safer tomorrow, one detection at a time.*
 
