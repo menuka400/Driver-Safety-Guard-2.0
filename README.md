@@ -56,7 +56,7 @@ Driver Safety Guard 2.0 is a cutting-edge, **fully GPU-optimized** AI system tha
 ## 🎬 **Demo & Screenshots**
 
 ### � **Project Poster**
-![Driver Safety Guard 2.0 Poster](IOT%20Poster.pdf)
+![Driver Safety Guard 2.0 Poster](https://github.com/menuka400/Driver-Safety-Guard-2.0/blob/main/IOT%20Poster.pdf)
 *Professional IoT project poster showcasing the complete system architecture and features*
 
 ### �🖥️ **Real-time Detection Interface**
