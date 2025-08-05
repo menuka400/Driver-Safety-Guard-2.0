@@ -558,6 +558,13 @@ Driver Safety Guard 2.0 is an assistive technology designed to enhance driver aw
 
 ## 🙏 **Acknowledgments**
 
+### 👥 **Development Team**
+- **M. H. Jayasuriya** - Project Lead & AI Engineer
+- **K. B. R. S. Wijerathna** - Hardware Integration Specialist
+- **K. M. N. S. M. Kumarasinghe** - IoT & ESP32 Developer
+- **A. G. C. S. Bandara** - Computer Vision Engineer
+- **A. J. M. Pramodya Priyasanka** - Software Architecture & Testing
+
 ### 🎓 **Research & Models**
 - **YOLO**: Ultralytics team for YOLO11x and YOLOv11l models
 - **MediaPipe**: Google AI for facial landmark detection
