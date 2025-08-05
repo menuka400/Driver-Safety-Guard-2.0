@@ -1,18 +1,8 @@
 # 🚗 Driver Safety Guard 2.0
 
 <div align="center">
-## 🎬 **Demo & Screenshots**
 
-### 📊 **Project Poster**
-<div align="center">
-
-![Driver Safety Guard 2.0 - IoT Poster](https://github.com/menuka400/Driver-Safety-Guard-2.0/blob/main/IOT%20Poster.png)
-
-*Professional IoT project poster showcasing the complete system architecture, research methodology, hardware design, and real-world applications of the Driver Safety Guard 2.0 system*
-
-</div>
-
-### 🖥️ **Real-time Detection Interface**er Safety Guard](https://img.shields.io/badge/Driver-Safety%20Guard%202.0-blue?style=for-the-badge&logo=opencv)
+![Driver Safety Guard](https://img.shields.io/badge/Driver-Safety%20Guard%202.0-blue?style=for-the-badge&logo=opencv)
 ![Python](https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red?style=for-the-badge&logo=pytorch)
 ![ESP32](https://img.shields.io/badge/ESP32-IoT-green?style=for-the-badge&logo=espressif)
@@ -27,6 +17,37 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 </div>
+
+---
+
+## 🎬 **Demo & Screenshots**
+
+### 📊 **Project Poster**
+<div align="center">
+
+![Driver Safety Guard 2.0 - IoT Poster](https://github.com/menuka400/Driver-Safety-Guard-2.0/blob/main/IOT%20Poster.png)
+
+*Professional IoT project poster showcasing the complete system architecture, research methodology, hardware design, and real-world applications of the Driver Safety Guard 2.0 system*
+
+</div>
+
+### 🖥️ **Real-time Detection Interface**
+```
+🚀 Fully GPU-Optimized Mobile Phone and Face Tracker with Gaze Direction
+======================================================================
+Features:
+  📱 YOLO11x Mobile Phone Detection
+  👤 YOLOv11l Face Detection
+  👁️ MediaPipe Eye State Detection
+  👀 MediaPipe Gaze Direction Tracking
+  🧠 HRNetV2 Feature Extraction
+  🔊 Smart TTS Alerts
+  ⚡ Full GPU Acceleration
+  📡 ESP32 Communication
+  ⏱️ Continuous gaze tracking for TTS triggers
+  🏗️ Professional Modular Architecture
+======================================================================
+```
 
 ---
 
@@ -60,51 +81,6 @@ Driver Safety Guard 2.0 is a cutting-edge, **fully GPU-optimized** AI system tha
 | **Real-time Tracking** | HRNetV2 Feature Extraction | ✅ Production Ready |
 
 </div>
-
----
-
-## 🎬 **Demo & Screenshots**
-
-### � **Project Poster**
-![Driver Safety Guard 2.0 Poster](IOT%20Poster.pdf)
-*Professional IoT project poster showcasing the complete system architecture and features*
-
-### �🖥️ **Real-time Detection Interface**
-```
-🚀 Fully GPU-Optimized Mobile Phone and Face Tracker with Gaze Direction
-======================================================================
-Features:
-  📱 YOLO11x Mobile Phone Detection
-  👤 YOLOv11l Face Detection
-  👁️ MediaPipe Eye State Detection
-  👀 MediaPipe Gaze Direction Tracking
-  🧠 HRNetV2 Feature Extraction
-  🔊 Smart TTS Alerts
-  ⚡ Full GPU Acceleration
-  📡 ESP32 Communication
-  ⏱️ Continuous gaze tracking for TTS triggers
-  🏗️ Professional Modular Architecture
-======================================================================
-```
-
-### 📱 **Blynk Mobile App Dashboard**
-- **Real-time Status Monitoring**: Live detection states and alerts
-- **Remote Control**: System on/off, sensitivity adjustments
-- **Environmental Monitoring**: Temperature and smoke level readings
-- **Alert History**: Comprehensive logging and analytics
-- **Interactive Controls**: Threshold adjustment sliders and manual testing buttons
-
-### 🔧 **ESP32 Hardware Setup**
-- **RGB LED Indicators**: Color-coded alerts for different behaviors
-- **Audio Alerts**: Buzzer notifications for immediate attention
-- **Sensor Integration**: MQ2 smoke detector for smoking detection
-- **Temperature Monitoring**: DS18B20 sensor for environmental data
-- **Web Interface**: Browser-based configuration and monitoring dashboard
-
-### 📊 **Visual Documentation**
-- **System Poster**: [View Project Poster](IOT%20Poster.png) - Complete system overview with research methodology
-- **Architecture Diagrams**: Detailed technical flow and component interaction
-- **Performance Charts**: Real-time detection accuracy and system benchmarks
 
 ---
 
@@ -429,7 +405,7 @@ Access the ESP32 web dashboard at: `http://YOUR_ESP32_IP/`
 
 ---
 
-## �️ **Media & Presentations**
+## 🖼️ **Media & Presentations**
 
 ### 🎨 **Project Showcase Materials**
 - **📊 [IoT Project Poster](IOT%20Poster.png)** - Comprehensive visual overview of the Driver Safety Guard 2.0 system
@@ -451,7 +427,7 @@ Access the ESP32 web dashboard at: `http://YOUR_ESP32_IP/`
 
 ---
 
-## �🛠️ **Development & Contributing**
+## 🛠️ **Development & Contributing**
 
 ### 🏗️ **Project Structure**
 ```
