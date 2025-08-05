@@ -552,8 +552,6 @@ ls -la models/
 - 📊 [System Architecture](docs/SYSTEM_FLOWCHART.md)
 
 #### **Community Support**
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/menuka400/Driver-Safety-Guard-2.0/issues)
-- 💡 **Feature Requests**: [GitHub Discussions]
 - 📧 **Direct Contact**: [menuka400@example.com](mailto:menuka400@gmail.com)
 ---
 
