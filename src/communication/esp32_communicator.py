@@ -10,7 +10,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class ESP32Communicator:
-    def __init__(self, ip="192.168.1.121", port=80):
+    def __init__(self, ip="10.27.146.54", port=80):
         """Initialize ESP32 communication"""
         self.esp32_ip = ip
         self.esp32_port = port

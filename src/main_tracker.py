@@ -44,7 +44,7 @@ class FullyGPUOptimizedTracker:
         # Initialize communication components
         esp32_config = self.config.get("esp32", {})
         self.esp32_comm = ESP32Communicator(
-            ip=esp32_config.get("ip_address", "192.168.1.121"),
+            ip=esp32_config.get("ip_address", "10.27.146.54"),
             port=esp32_config.get("port", 80)
         )
         
