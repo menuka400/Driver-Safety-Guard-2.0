@@ -553,10 +553,8 @@ ls -la models/
 
 #### **Community Support**
 - 🐛 **Bug Reports**: [GitHub Issues](https://github.com/menuka400/Driver-Safety-Guard-2.0/issues)
-- 💡 **Feature Requests**: [GitHub Discussions](https://github.com/menuka400/Driver-Safety-Guard-2.0/discussions)
-- 📧 **Direct Contact**: [menuka400@example.com](mailto:menuka400@example.com)
-- 💬 **Community Chat**: [Discord Server](https://discord.gg/driver-safety-guard)
-
+- 💡 **Feature Requests**: [GitHub Discussions]
+- 📧 **Direct Contact**: [menuka400@example.com](mailto:menuka400@gmail.com)
 ---
 
 ## 📜 **License & Legal**
@@ -612,7 +610,7 @@ If you found Driver Safety Guard 2.0 useful, please give it a ⭐ on GitHub!
 
 [![GitHub Stars](https://img.shields.io/github/stars/menuka400/Driver-Safety-Guard-2.0?style=social)](https://github.com/menuka400/Driver-Safety-Guard-2.0)
 
-**Made with ❤️ by [Menuka400](https://github.com/menuka400)**
+**Made with ❤️ by [Team]**
 
 *Driving towards a safer tomorrow, one detection at a time.*
 
