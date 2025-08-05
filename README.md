@@ -2,7 +2,14 @@
 
 <div align="center">
 
-![Driver Safety Guard](https://img.shields.io/badge/Driver-Safety%20Guard%202.0-blue?style=for-the-badge&logo=opencv)
+!### 📊 **Project Poster**
+<div align="center">
+
+![Driver Safety Guard 2.0 - IoT Poster](https://github.com/menuka400/Driver-Safety-Guard-2.0/blob/main/IOT%20Poster.png)
+
+*Professional IoT project poster showcasing the complete system architecture, research methodology, hardware design, and real-world applications of the Driver Safety Guard 2.0 system*
+
+</div>iver Safety Guard](https://img.shields.io/badge/Driver-Safety%20Guard%202.0-blue?style=for-the-badge&logo=opencv)
 ![Python](https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red?style=for-the-badge&logo=pytorch)
 ![ESP32](https://img.shields.io/badge/ESP32-IoT-green?style=for-the-badge&logo=espressif)
@@ -92,7 +99,7 @@ Features:
 - **Web Interface**: Browser-based configuration and monitoring dashboard
 
 ### 📊 **Visual Documentation**
-- **System Poster**: [View Project Poster](IOT%20Poster.pdf) - Complete system overview
+- **System Poster**: [View Project Poster](IOT%20Poster.png) - Complete system overview with research methodology
 - **Architecture Diagrams**: Detailed technical flow and component interaction
 - **Performance Charts**: Real-time detection accuracy and system benchmarks
 
@@ -422,8 +429,8 @@ Access the ESP32 web dashboard at: `http://YOUR_ESP32_IP/`
 ## �️ **Media & Presentations**
 
 ### 🎨 **Project Showcase Materials**
-- **📊 [IoT Project Poster](IOT%20Poster.pdf)** - Comprehensive visual overview of the Driver Safety Guard 2.0 system
-- **🏗️ System Architecture Diagram** - Detailed technical architecture showcase
+- **📊 [IoT Project Poster](IOT%20Poster.png)** - Comprehensive visual overview of the Driver Safety Guard 2.0 system
+- **🏗️ System Architecture Diagram** - Detailed technical architecture showcase  
 - **📱 Blynk Dashboard Screenshots** - Mobile app interface demonstrations
 - **🔧 Hardware Setup Photos** - ESP32 and sensor integration examples
 
